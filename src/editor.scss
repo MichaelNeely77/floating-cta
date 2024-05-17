@@ -7,3 +7,40 @@
 .wp-block-create-block-floating-cta {
 	border: 1px dotted #f00;
 }
+
+.wp-block-create-block-floating-cta {
+  position: fixed;
+  right: 0;
+  top: 300px;
+  width: 300px;
+  padding: 20px;
+  background: #fff;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  transition: right 0.5s ease-in-out;
+
+  &.closed {
+	right: -260px; // Adjust as needed to leave a small tab visible
+  }
+
+  .cta-button {
+	display: block;
+	text-align: center;
+	padding: 10px 20px;
+	background: #0073aa;
+	color: #fff;
+	text-decoration: none;
+	border-radius: 4px;
+	margin-top: 10px;
+  }
+
+  .cta-close-button {
+	position: absolute;
+	top: 10px;
+	right: 10px;
+	background: transparent;
+	border: none;
+	font-size: 16px;
+	cursor: pointer;
+  }
+}
+
