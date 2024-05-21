@@ -6,23 +6,40 @@
  */
 
 .wp-block-create-block-floating-cta {
-	background-color: #21759b;
-	color: #fff;
-	padding: 2px;
-}
-
-.wp-block-create-block-floating-cta {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   position: fixed;
   right: 0;
-  top: 300px;
+  top: 250px;
   width: 300px;
   padding: 20px;
   background: #fff;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  transition: right 0.5s ease-in-out;
+  transition: right 0.5s ease-in-out; // Ensure the transition property is set
+  z-index: 10;
 
   &.closed {
 	right: -260px; // Adjust as needed to leave a small tab visible
+  }
+
+  h3 {
+	margin: 0 0 10px;
+	font-size: 1.5em;
+  }
+
+  p {
+	margin: 0 0 10px;
+  }
+
+  .cta-image-wrapper {
+	margin: 10px 0;
+	text-align: center;
+  }
+
+  img {
+	max-width: 100%;
+	height: auto;
   }
 
   .cta-button {
@@ -39,11 +56,16 @@
   .cta-close-button {
 	position: absolute;
 	top: 10px;
-	right: 10px;
+	left: 10px;
 	background: transparent;
 	border: none;
 	font-size: 16px;
 	cursor: pointer;
+	padding: 5px 10px;
+	color: #000;
+  }
+
+  .components-placeholder__button {
+	margin-top: 10px;
   }
 }
-

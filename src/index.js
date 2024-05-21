@@ -5,7 +5,7 @@
  */
 import { registerBlockType } from '@wordpress/blocks';
 import { __ } from '@wordpress/i18n';
-import { useBlockProps, RichText, MediaUpload, InspectorControls } from '@wordpress/block-editor';
+import { useBlockProps, RichText, MediaUpload, MediaUploadCheck, InspectorControls, URLInputButton } from '@wordpress/block-editor';
 import { Button, PanelBody } from '@wordpress/components';
 import './style.scss';
 import './editor.scss';
@@ -31,17 +31,7 @@ import metadata from './block.json';
  *
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
-registerBlockType( metadata.name, {
-	/**
-	 * @see ./edit.js
-	 */
-	edit: Edit,
 
-	/**
-	 * @see ./save.js
-	 */
-	save,
-} );
 
 registerBlockType('create-block/floating-cta', {
 	title: __('Floating CTA', 'floating-cta'),
@@ -51,7 +41,12 @@ registerBlockType('create-block/floating-cta', {
 		heading: {
 			type: 'string',
 			source: 'html',
-			selector: 'h2',
+			selector: 'h3',
+		},
+		text: {
+			type: 'string',
+			source: 'html',
+			selector: 'p',
 		},
 		imageUrl: {
 			type: 'string',
@@ -73,6 +68,10 @@ registerBlockType('create-block/floating-cta', {
 			setAttributes({ heading: newHeading });
 		};
 
+		const onChangeText = (newText) => {
+			setAttributes({ text: newText });
+		};
+
 		const onSelectImage = (media) => {
 			setAttributes({ imageUrl: media.url });
 		};
@@ -89,25 +88,35 @@ registerBlockType('create-block/floating-cta', {
 			<div {...blockProps}>
 				<InspectorControls>
 					<PanelBody title={__('Image Settings', 'floating-cta')}>
-						<MediaUpload
-							onSelect={onSelectImage}
-							allowedTypes={['image']}
-							render={({ open }) => (
-								<Button onClick={open} isDefault isLarge>
-									{__('Select Image', 'floating-cta')}
-								</Button>
-							)}
-						/>
+						<MediaUploadCheck>
+							<MediaUpload
+								onSelect={onSelectImage}
+								allowedTypes={['image']}
+								render={({ open }) => (
+									<Button onClick={open} isDefault isLarge>
+										{__('Select Image', 'floating-cta')}
+									</Button>
+								)}
+							/>
+						</MediaUploadCheck>
 					</PanelBody>
 				</InspectorControls>
 				<RichText
-					tagName="h2"
+					tagName="h3"
 					value={attributes.heading}
 					onChange={onChangeHeading}
 					placeholder={__('Heading...', 'floating-cta')}
 				/>
+				<RichText
+					tagName="p"
+					value={attributes.text}
+					onChange={onChangeText}
+					placeholder={__('Text...', 'floating-cta')}
+				/>
 				{attributes.imageUrl && (
-					<img src={attributes.imageUrl} alt={__('Selected Image', 'floating-cta')} />
+					<div className="cta-image-wrapper">
+						<img src={attributes.imageUrl} alt={__('Selected Image', 'floating-cta')} />
+					</div>
 				)}
 				<RichText
 					tagName="a"
@@ -116,14 +125,13 @@ registerBlockType('create-block/floating-cta', {
 					onChange={onChangeButtonText}
 					placeholder={__('Button Text...', 'floating-cta')}
 				/>
-				<RichText
-					tagName="a"
-					className="cta-button-url"
-					value={attributes.buttonUrl}
+				<URLInputButton
+					url={attributes.buttonUrl}
 					onChange={onChangeButtonUrl}
-					placeholder={__('Button URL...', 'floating-cta')}
 				/>
-				<button className="cta-close-button">X</button>
+				<button className="cta-close-button" onClick={() => document.querySelector('.wp-block-create-block-floating-cta').classList.toggle('closed')}>
+					X
+				</button>
 			</div>
 		);
 	},
@@ -132,9 +140,12 @@ registerBlockType('create-block/floating-cta', {
 
 		return (
 			<div {...blockProps}>
-				<RichText.Content tagName="h2" value={attributes.heading} />
+				<RichText.Content tagName="h3" value={attributes.heading} />
+				<RichText.Content tagName="p" value={attributes.text} />
 				{attributes.imageUrl && (
-					<img src={attributes.imageUrl} alt={__('Selected Image', 'floating-cta')} />
+					<div className="cta-image-wrapper">
+						<img src={attributes.imageUrl} alt={__('Selected Image', 'floating-cta')} />
+					</div>
 				)}
 				<a href={attributes.buttonUrl} className="cta-button">
 					<RichText.Content value={attributes.buttonText} />
