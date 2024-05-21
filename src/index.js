@@ -25,7 +25,6 @@ import './editor.scss';
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-registration/
  */
 
-
 registerBlockType('create-block/floating-cta', {
 	title: __('Floating CTA', 'floating-cta'),
 	icon: 'megaphone',
@@ -77,10 +76,6 @@ registerBlockType('create-block/floating-cta', {
 			setAttributes({ buttonUrl: newButtonUrl });
 		};
 
-		const toggleCTA = () => {
-			document.querySelector('.wp-block-create-block-floating-cta').classList.toggle('closed');
-		};
-
 		return (
 			<div {...blockProps}>
 				<InspectorControls>
@@ -126,7 +121,7 @@ registerBlockType('create-block/floating-cta', {
 					url={attributes.buttonUrl}
 					onChange={onChangeButtonUrl}
 				/>
-				<button className="cta-close-button" onClick={toggleCTA}>
+				<button className="cta-close-button" onClick={() => window.toggleCTA()}>
 					X
 				</button>
 			</div>
@@ -134,10 +129,6 @@ registerBlockType('create-block/floating-cta', {
 	},
 	save({ attributes }) {
 		const blockProps = useBlockProps.save();
-
-		const toggleCTA = () => {
-			document.querySelector('.wp-block-create-block-floating-cta').classList.toggle('closed');
-		};
 
 		return (
 			<div {...blockProps}>
@@ -151,7 +142,9 @@ registerBlockType('create-block/floating-cta', {
 				<a href={attributes.buttonUrl} className="cta-button">
 					<RichText.Content value={attributes.buttonText} />
 				</a>
-				<button className="cta-close-button" onClick={toggleCTA}>X</button>
+				<button className="cta-close-button" onClick={() => window.toggleCTA()}>
+					X
+				</button>
 			</div>
 		);
 	},

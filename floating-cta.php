@@ -4,6 +4,7 @@ Plugin Name: Floating CTA
 Description: A plugin to add a floating CTA block with a heading, image, and button.
 Version: 1.0
 Author: Michael Neely
+Author URI: https://michaelneely.net
 */
 
 // Exit if accessed directly.
@@ -18,6 +19,13 @@ function floating_cta_block_editor_assets() {
 		plugins_url('build/index.js', __FILE__),
 		array('wp-blocks', 'wp-element', 'wp-editor', 'wp-components', 'wp-i18n', 'wp-api'),
 		filemtime(plugin_dir_path(__FILE__) . 'build/index.js')
+	);
+
+	wp_enqueue_script(
+		'floating-cta-toggle',
+		plugins_url('src/toggle-cta.js', __FILE__),
+		array(),
+		filemtime(plugin_dir_path(__FILE__) . 'src/toggle-cta.js')
 	);
 
 	wp_enqueue_style(
@@ -36,6 +44,13 @@ function floating_cta_block_frontend_assets() {
 		plugins_url('build/style-index.css', __FILE__),
 		array(),
 		filemtime(plugin_dir_path(__FILE__) . 'build/style-index.css')
+	);
+
+	wp_enqueue_script(
+		'floating-cta-toggle',
+		plugins_url('src/toggle-cta.js', __FILE__),
+		array(),
+		filemtime(plugin_dir_path(__FILE__) . 'src/toggle-cta.js')
 	);
 }
 add_action('enqueue_block_assets', 'floating_cta_block_frontend_assets');
