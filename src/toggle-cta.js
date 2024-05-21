@@ -1,6 +1,12 @@
-function toggleCTA() {
-	document.querySelector('.wp-block-create-block-floating-cta').classList.toggle('closed');
-}
+document.addEventListener('DOMContentLoaded', () => {
+	const closeButton = document.querySelector('.cta-close-button');
 
-// Attach the function to the window object to make it globally accessible
-window.toggleCTA = toggleCTA;
+	if (closeButton) {
+		closeButton.addEventListener('click', () => {
+			const ctaBlock = document.querySelector('.wp-block-create-block-floating-cta');
+			if (ctaBlock) {
+				ctaBlock.classList.toggle('closed');
+			}
+		});
+	}
+});

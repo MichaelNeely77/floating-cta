@@ -121,7 +121,7 @@ registerBlockType('create-block/floating-cta', {
 					url={attributes.buttonUrl}
 					onChange={onChangeButtonUrl}
 				/>
-				<button className="cta-close-button" onClick={() => window.toggleCTA()}>
+				<button className="cta-close-button">
 					X
 				</button>
 			</div>
@@ -142,7 +142,7 @@ registerBlockType('create-block/floating-cta', {
 				<a href={attributes.buttonUrl} className="cta-button">
 					<RichText.Content value={attributes.buttonText} />
 				</a>
-				<button className="cta-close-button" onClick={() => window.toggleCTA()}>
+				<button className="cta-close-button">
 					X
 				</button>
 			</div>
