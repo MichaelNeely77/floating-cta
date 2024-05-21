@@ -17,14 +17,7 @@ import './editor.scss';
  *
  * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
  */
-import './style.scss';
 
-/**
- * Internal dependencies
- */
-import Edit from './edit';
-import save from './save';
-import metadata from './block.json';
 
 /**
  * Every block starts by registering a new block type definition.
@@ -84,6 +77,10 @@ registerBlockType('create-block/floating-cta', {
 			setAttributes({ buttonUrl: newButtonUrl });
 		};
 
+		const toggleCTA = () => {
+			document.querySelector('.wp-block-create-block-floating-cta').classList.toggle('closed');
+		};
+
 		return (
 			<div {...blockProps}>
 				<InspectorControls>
@@ -129,7 +126,7 @@ registerBlockType('create-block/floating-cta', {
 					url={attributes.buttonUrl}
 					onChange={onChangeButtonUrl}
 				/>
-				<button className="cta-close-button" onClick={() => document.querySelector('.wp-block-create-block-floating-cta').classList.toggle('closed')}>
+				<button className="cta-close-button" onClick={toggleCTA}>
 					X
 				</button>
 			</div>
@@ -137,6 +134,10 @@ registerBlockType('create-block/floating-cta', {
 	},
 	save({ attributes }) {
 		const blockProps = useBlockProps.save();
+
+		const toggleCTA = () => {
+			document.querySelector('.wp-block-create-block-floating-cta').classList.toggle('closed');
+		};
 
 		return (
 			<div {...blockProps}>
@@ -150,7 +151,7 @@ registerBlockType('create-block/floating-cta', {
 				<a href={attributes.buttonUrl} className="cta-button">
 					<RichText.Content value={attributes.buttonText} />
 				</a>
-				<button className="cta-close-button">X</button>
+				<button className="cta-close-button" onClick={toggleCTA}>X</button>
 			</div>
 		);
 	},
